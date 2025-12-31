@@ -26,7 +26,7 @@ jobs:
         run: |
           docker build \
             -t $DOCKERHUB_USERNAME/go-service:1.0 \
-            ./service/go-service
+            ./services/go-service
 
       - name: Push go service image
         run: |
