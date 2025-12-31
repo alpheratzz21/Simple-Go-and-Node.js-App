@@ -1,4 +1,3 @@
 services/node-service/node_modules/
-services/node-service/package*.json
 
 services/go-service/bin/
