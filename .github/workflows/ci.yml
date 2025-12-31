@@ -1,0 +1,58 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  REGISTRY: docker.io
+  DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+      
+      - name: Build go service
+        run: |
+          cd service/go-service
+          go mod tidy
+          go build -o app
+
+      
+      - name: Set up node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Build Node service
+        run: |
+          cd service/node-service
+          npm install
+          npm test || true
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+      - name: Build and push go service image
+        run: |
+          docker build -t $DOCKERHUB_USERNAME/go-service:1.0 ./service/go-service
+          docker push $DOCKERHUB_USERNAME/go-service:1.0
+
+      
+      - name: Build and push nodejs service image
+        run: |
+          docker build -t $DOCKERHUB_USERNAME/node-service:1.0 ./service/node-service
+          docker push $DOCKERHUB_USERNAME/node-service:1.0
