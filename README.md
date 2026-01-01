@@ -68,23 +68,22 @@ Apply all manifests:
 kubectl apply -f k8s/
 
 ## Accessing the Services
-Local Kubernetes (Recommended for Testing)
+### Local Kubernetes (Recommended for Testing)
 
 Services can be accessed using port-forward:
 ```
 kubectl port-forward svc/go-service 8000:8000
 kubectl port-forward svc/node-service 3000:3000
 ``` 
-
-### Access:
+Access:
 
 Go Service: ```http://localhost:8000```
 
 Node Service: ```http://localhost:3000```
 
-Ingress manifests using xip.io are included to demonstrate public exposure via DNS. Actual ingress availability depends on the local Kubernetes environment.
+- Ingress manifests using xip.io are included to demonstrate public exposure via DNS. Actual ingress availability depends on the local Kubernetes environment.
 
-Running Without Kubernetes
+### Running Without Kubernetes
 
 Run services directly using Docker:
 
@@ -92,8 +91,3 @@ Run services directly using Docker:
 docker run -p 8000:8000 <dockerhub-username>/go-service:latest
 docker run -p 3000:3000 <dockerhub-username>/node-service:latest
 ```
-## Notes
-
-This project prioritizes clarity and simplicity.
-
-Kubernetes manifests are provided as infrastructure-as-code, even if not fully deployed in all local environments.
