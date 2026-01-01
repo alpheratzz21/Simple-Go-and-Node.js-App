@@ -65,10 +65,9 @@ Kubernetes manifests are provided for:
 - Ingress (optional)
 
 Apply all manifests:
-```bash
 kubectl apply -f k8s/
-
-Accessing the Services
+---
+## Accessing the Services
 Local Kubernetes (Recommended for Testing)
 
 Services can be accessed using port-forward:
@@ -91,14 +90,6 @@ Run services directly using Docker:
 
 docker run -p 8000:8000 <dockerhub-username>/go-service:latest
 docker run -p 3000:3000 <dockerhub-username>/node-service:latest
-
-Monitoring and Logging (Design)
-
-Health checks via /health endpoints
-
-Logs written to stdout
-
-In production, metrics can be collected using Prometheus and visualized with Grafana
 
 Notes
 
